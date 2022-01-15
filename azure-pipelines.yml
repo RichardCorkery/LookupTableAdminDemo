@@ -16,3 +16,7 @@ steps:
     SourceFolder: '$(Build.SourcesDirectory)'
     Contents: '**/AzureDeploy/**'
     TargetFolder: '$(Build.ArtifactStagingDirectory)'
+
+- publish: '$(Build.ArtifactStagingDirectory)'
+  displayName: 'Publish pipeline artifacts'
+  artifact: drop
