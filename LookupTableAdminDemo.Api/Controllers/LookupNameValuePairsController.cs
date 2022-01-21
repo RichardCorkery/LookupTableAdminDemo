@@ -9,16 +9,24 @@ namespace LookupTableAdminDemo.Api.Controllers
     public class LookupNameValuePairsController : ControllerBase
     {
         private readonly ILogger<LookupNameValuePairsController> _logger;
+        private readonly IConfiguration _configuration;
+        private readonly CloudTable _table;
 
-        public LookupNameValuePairsController(ILogger<LookupNameValuePairsController> logger)
+        public LookupNameValuePairsController(ILogger<LookupNameValuePairsController> logger, IConfiguration configuration)
         {
             _logger = logger;
+            _configuration = configuration;
+
+            var storageAccount = CloudStorageAccount.Parse(_configuration["Data:AzureStorageDemos:ConnectionString"]);
+
+            var tableClient = storageAccount.CreateCloudTableClient();
+
+            _table = tableClient.GetTableReference("LookupNameValuePair");
         }
 
         // ToDo: Add api
         // GET: api/vpb-delegates
-
-        //ToDo: Get cnnstring from config file
+        
         //ToDo: Deploy to Azure
         //ToDo: Delete 
         //ToDo: Create
@@ -26,16 +34,13 @@ namespace LookupTableAdminDemo.Api.Controllers
 
         //ToDo: Confirm Delete
         //ToDo: Split up Controller to: Controller and Repo
+        //ToDo: Set up DI
 
         // GET: api/lookupnamevaluepairs
         [HttpGet()]
         public IEnumerable<LookupNameValuePairEntity> Get()
         {
-            var storageAccount = CloudStorageAccount.Parse("");
-            
-            var tableClient = storageAccount.CreateCloudTableClient();
 
-            var _table = tableClient.GetTableReference("LookupNameValuePair");
 
             var query = new TableQuery<LookupNameValuePairEntity>();
 
@@ -53,11 +58,6 @@ namespace LookupTableAdminDemo.Api.Controllers
         [HttpGet("partitionKey, rowKey")]
         public void Get(string partitionKey, string rowKey)
         {
-            var storageAccount = CloudStorageAccount.Parse("");
-
-            var tableClient = storageAccount.CreateCloudTableClient();
-
-            var _table = tableClient.GetTableReference("LookupNameValuePair");
 
             var operation = TableOperation.Retrieve<LookupNameValuePairEntity>(partitionKey, rowKey);
 
@@ -70,12 +70,6 @@ namespace LookupTableAdminDemo.Api.Controllers
         [HttpPost]
         public void Post(LookupNameValuePairEntity model)
         {
-            var storageAccount = CloudStorageAccount.Parse("");
-
-            var tableClient = storageAccount.CreateCloudTableClient();
-
-            var _table = tableClient.GetTableReference("LookupNameValuePair");
-
             var entity = model;
 
             var operation = TableOperation.InsertOrReplace(entity);
