@@ -23,14 +23,10 @@ namespace LookupTableAdminDemo.Api.Controllers
 
             _table = tableClient.GetTableReference("LookupNameValuePair");
         }
-
-        // ToDo: Add api
+        
         // GET: api/vpb-delegates
 
         //ToDo: Deploy to Azure
-        //ToDo: Delete 
-        //ToDo: Create
-        //ToDo: Update/Replace
 
         //ToDo: Review PS ToDo App
         //ToDo: Confirm Delete
@@ -42,29 +38,23 @@ namespace LookupTableAdminDemo.Api.Controllers
         [HttpGet()]
         public IEnumerable<LookupNameValuePairEntity> Get()
         {
-            
             var query = new TableQuery<LookupNameValuePairEntity>();
 
             var entities = _table.ExecuteQuery(query);
-
-            foreach (var entity in entities)
-            {
-                var x = entity.LookupKey;
-            }
 
             return entities.ToArray();
         }
 
         // GET: api/lookupnamevaluepairs/00000
         [HttpGet("partitionKey, rowKey")]
-        public void Get(string partitionKey, string rowKey)
+        public LookupNameValuePairEntity Get(string partitionKey, string rowKey)
         {
 
             var operation = TableOperation.Retrieve<LookupNameValuePairEntity>(partitionKey, rowKey);
 
             var result = _table.Execute(operation);
 
-            //return result.Result as TodoEntity;
+            return result.Result as LookupNameValuePairEntity;
         }
 
         // POST api/lookupnamevaluepairs
@@ -82,7 +72,7 @@ namespace LookupTableAdminDemo.Api.Controllers
             _table.Execute(operation);
         }
 
-        // PUT api/lookupnamevaluepairs
+        // PUT api/lookupnamevaluepairs/???
         [HttpPut]
         public void Put(LookupNameValuePairEntity model)
         {
@@ -97,6 +87,21 @@ namespace LookupTableAdminDemo.Api.Controllers
             entity.Value = model.Value;
             
             var operation2 = TableOperation.Replace(entity);
+
+            _table.Execute(operation2);
+        }
+
+        // PUT api/lookupnamevaluepairs/???
+        [HttpDelete]
+        public void Delete(string partitionKey, string rowKey)
+        {
+            var operation = TableOperation.Retrieve<LookupNameValuePairEntity>(partitionKey, rowKey);
+
+            var result = _table.Execute(operation);
+
+            var entity = result.Result as LookupNameValuePairEntity;
+
+            var operation2 = TableOperation.Delete(entity);
 
             _table.Execute(operation2);
         }
