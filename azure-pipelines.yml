@@ -9,7 +9,24 @@ trigger:
 pool:
   vmImage: ubuntu-latest
 
+variables:
+   BuildConfiguration: 'Release'
+
 steps:
+
+- task: DotNetCoreCLI@2
+  displayName: Restore
+  inputs:
+    command: 'restore'
+    projects: '$(RestoreBuildProjects)'
+
+- task: DotNetCoreCLI@2
+  displayName: Publish
+  inputs:
+    command: publish
+    publishWebProjects: false
+    projects: '**/LookupTableAdminDemo.Api.csproj'
+    arguments: '--configuration $(BuildConfiguration) --output $(build.artifactstagingdirectory)'
 - task: CopyFiles@2
   displayName: 'Copy Deploy files'
   inputs:
