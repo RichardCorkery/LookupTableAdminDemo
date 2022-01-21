@@ -9,7 +9,30 @@ trigger:
 pool:
   vmImage: ubuntu-latest
 
+variables:
+   BuildConfiguration: 'Release'
+   RestoreBuildProjects: '**/*.csproj'
+
 steps:
+
+- task: UseDotNet@2
+  displayName: 'Use .NET Core sdk 6.0.x'
+  inputs:
+    version: 6.0.x
+
+- task: DotNetCoreCLI@2
+  displayName: Restore
+  inputs:
+    command: 'restore'       
+    projects: '$(RestoreBuildProjects)'
+
+- task: DotNetCoreCLI@2
+  displayName: Publish
+  inputs:
+    command: publish
+    publishWebProjects: false
+    projects: '**/LookupTableAdminDemo.Api.csproj'
+    arguments: '--configuration $(BuildConfiguration) --output $(build.artifactstagingdirectory)'
 - task: CopyFiles@2
   displayName: 'Copy Deploy files'
   inputs:
