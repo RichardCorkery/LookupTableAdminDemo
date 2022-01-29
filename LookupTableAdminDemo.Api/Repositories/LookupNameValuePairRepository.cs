@@ -42,12 +42,12 @@ public class LookupNameValuePairRepository
     //    _lookupNameValuePairTable.Execute(operation);
     //}
 
-    //public LookupNameValuePairEntity Get(string partitionKey, string rowKey)
-    //{
-    //    var operation = TableOperation.Retrieve<LookupNameValuePairEntity>(partitionKey, rowKey);
+    public LookupNameValuePairEntity Get(string partitionKey, string rowKey)
+    {
+        var operation = TableOperation.Retrieve<LookupNameValuePairEntity>(partitionKey, rowKey);
 
-    //    var result = _lookupNameValuePairTable.Execute(operation);
+        var result = _lookupNameValuePairTable.Execute(operation);
 
-    //    return result.Result as LookupNameValuePairEntity;
-    //}
+        return result.Result as LookupNameValuePairEntity;
+    }
 }

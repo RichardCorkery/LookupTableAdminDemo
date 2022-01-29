@@ -20,11 +20,11 @@ namespace LookupTableAdminDemo.Api.Controllers
             _logger = logger;
             _configuration = configuration;
 
-            var storageAccount = CloudStorageAccount.Parse(_configuration["Data:AzureStorageDemos:ConnectionString"]);
+            //var storageAccount = CloudStorageAccount.Parse(_configuration["Data:AzureStorageDemos:ConnectionString"]);
 
-            var tableClient = storageAccount.CreateCloudTableClient();
+            //var tableClient = storageAccount.CreateCloudTableClient();
 
-            _table = tableClient.GetTableReference("LookupNameValuePair");
+            //_table = tableClient.GetTableReference("LookupNameValuePair");
         }
 
         // GET: api/vpb-delegates
@@ -60,24 +60,35 @@ namespace LookupTableAdminDemo.Api.Controllers
             return models.ToArray();
         }
 
-        //// GET: api/lookupnamevaluepairs/00000
-        //[HttpGet("partitionKey, rowKey")]
-        //public LookupNameValuePairModel Get(string partitionKey, string rowKey)
-        //{
+        // GET: api/lookupnamevaluepairs/00000
+        [HttpGet("partitionKey, rowKey")]
+        public LookupNameValuePairModel Get(string partitionKey, string rowKey)
+        {
+            var cnnStr = _configuration["Data:AzureStorageDemos:ConnectionString"];
 
-        //    var operation = TableOperation.Retrieve<LookupNameValuePairModel>(partitionKey, rowKey);
+            var repository = new LookupNameValuePairRepository(cnnStr);
 
-        //    var result = _table.Execute(operation);
 
-        //    return result.Result as LookupNameValuePairModel;
-        //}
+            var entity = repository.Get(partitionKey, rowKey);
+
+            var model = new LookupNameValuePairModel
+            {
+                RowKey = entity.RowKey,
+                PartitionKey = entity.PartitionKey,
+                LookupKey = entity.LookupKey,
+                Value = entity.Value
+            };
+
+            return model;
+
+        }
 
         //// POST api/lookupnamevaluepairs
         //[HttpPost]
         //public void Post(LookupNameValuePairModel model)
         //{
         //    var entity = model;
-            
+
 
         //    var operation = TableOperation.Insert(entity);
 
@@ -97,10 +108,10 @@ namespace LookupTableAdminDemo.Api.Controllers
         //    var result = _table.Execute(operation);
 
         //    var entity = result.Result as LookupNameValuePairModel;
-            
+
         //    entity.LookupKey = model.LookupKey;
         //    entity.Value = model.Value;
-            
+
         //    var operation2 = TableOperation.Replace(entity);
 
         //    _table.Execute(operation2);
