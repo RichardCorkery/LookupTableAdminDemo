@@ -28,12 +28,27 @@ public class LookupNameValuePairRepository
         return _lookupNameValuePairTable.ExecuteQuery(query);
     }
 
-    //public void CreateOrUpdate(LookupNameValuePairEntity entity)
-    //{
-    //    var operation = TableOperation.InsertOrReplace(entity);
+    public void Insert(LookupNameValuePairEntity entity)
+    {
+        var operation = TableOperation.Insert(entity);
 
-    //    _lookupNameValuePairTable.Execute(operation);
-    //}
+        _lookupNameValuePairTable.Execute(operation);
+    }
+
+    public void Update(LookupNameValuePairEntity entity)
+    {
+        var operation = TableOperation.Replace(entity);
+
+        _lookupNameValuePairTable.Execute(operation);
+    }
+
+    //Note: You can have CreateOrUpdate
+    public void CreateOrUpdate(LookupNameValuePairEntity entity)
+    {
+        var operation = TableOperation.InsertOrReplace(entity);
+
+        _lookupNameValuePairTable.Execute(operation);
+    }
 
     //public void Delete(LookupNameValuePairEntity entity)
     //{

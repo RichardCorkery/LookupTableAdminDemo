@@ -83,20 +83,30 @@ namespace LookupTableAdminDemo.Api.Controllers
 
         }
 
-        //// POST api/lookupnamevaluepairs
-        //[HttpPost]
-        //public void Post(LookupNameValuePairModel model)
-        //{
-        //    var entity = model;
+        // POST api/lookupnamevaluepairs
+        // ToDo: what is normally returned?
+        [HttpPost]
+        public LookupNameValuePairModel Post(LookupNameValuePairModel model)
+        {
+            var cnnStr = _configuration["Data:AzureStorageDemos:ConnectionString"];
 
+            var repository = new LookupNameValuePairRepository(cnnStr);
 
-        //    var operation = TableOperation.Insert(entity);
+            var entity = new LookupNameValuePairEntity
+            {
+                PartitionKey = model.PartitionKey,
+                RowKey = Guid.NewGuid().ToString(),
+                LookupKey = model.LookupKey,
+                Value = model.Value
+            };
 
-        //    //$$$RAC: Note post and put could be combined
-        //    //var operation = TableOperation.InsertOrReplace(entity);
+            repository.Insert(entity);
 
-        //    _table.Execute(operation);
-        //}
+            model.RowKey = entity.RowKey;
+
+            return model;
+
+        }
 
         //// PUT api/lookupnamevaluepairs/???
         //[HttpPut]
