@@ -29,9 +29,6 @@ namespace LookupTableAdminDemo.Api.Controllers
 
         // GET: api/vpb-delegates
 
-        //ToDo: Create repo
-        //ToDo: Split up Controller to: Controller and Repo
-
         //ToDo: Deploy to Azure
 
         //ToDo: Review PS ToDo App
@@ -125,19 +122,19 @@ namespace LookupTableAdminDemo.Api.Controllers
             repository.Update(entity);
         }
 
-        //// PUT api/lookupnamevaluepairs/???
-        //[HttpDelete]
-        //public void Delete(string partitionKey, string rowKey)
-        //{
-        //    var operation = TableOperation.Retrieve<LookupNameValuePairModel>(partitionKey, rowKey);
+        // PUT api/lookupnamevaluepairs/???
+        [HttpDelete]
+        public void Delete(string partitionKey, string rowKey)
+        {
 
-        //    var result = _table.Execute(operation);
+            var cnnStr = _configuration["Data:AzureStorageDemos:ConnectionString"];
 
-        //    var entity = result.Result as LookupNameValuePairModel;
+            var repository = new LookupNameValuePairRepository(cnnStr);
 
-        //    var operation2 = TableOperation.Delete(entity);
+            var entity = repository.Get(partitionKey, rowKey);
 
-        //    _table.Execute(operation2);
-        //}
+            repository.Delete(entity);
+
+        }
     }
 }

@@ -50,12 +50,12 @@ public class LookupNameValuePairRepository
         _lookupNameValuePairTable.Execute(operation);
     }
 
-    //public void Delete(LookupNameValuePairEntity entity)
-    //{
-    //    var operation = TableOperation.Delete(entity);
+    public void Delete(LookupNameValuePairEntity entity)
+    {
+        var operation = TableOperation.Delete(entity);
 
-    //    _lookupNameValuePairTable.Execute(operation);
-    //}
+        _lookupNameValuePairTable.Execute(operation);
+    }
 
     public LookupNameValuePairEntity Get(string partitionKey, string rowKey)
     {
