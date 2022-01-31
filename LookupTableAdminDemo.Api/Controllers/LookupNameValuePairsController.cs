@@ -85,6 +85,7 @@ namespace LookupTableAdminDemo.Api.Controllers
 
         // POST api/lookupnamevaluepairs
         // ToDo: what is normally returned?
+        //ToDo Return Create Code 202?
         [HttpPost]
         public LookupNameValuePairModel Post(LookupNameValuePairModel model)
         {
@@ -108,24 +109,21 @@ namespace LookupTableAdminDemo.Api.Controllers
 
         }
 
-        //// PUT api/lookupnamevaluepairs/???
-        //[HttpPut]
-        //public void Put(LookupNameValuePairModel model)
-        //{
+        // PUT api/lookupnamevaluepairs/???
+        [HttpPut]
+        public void Put(LookupNameValuePairModel model)
+        {
+            var cnnStr = _configuration["Data:AzureStorageDemos:ConnectionString"];
 
-        //    var operation = TableOperation.Retrieve<LookupNameValuePairModel>(model.PartitionKey, model.RowKey);
+            var repository = new LookupNameValuePairRepository(cnnStr);
 
-        //    var result = _table.Execute(operation);
+            var entity = repository.Get(model.PartitionKey, model.RowKey);
+            
+            entity.LookupKey = model.LookupKey;
+            entity.Value = model.Value;
 
-        //    var entity = result.Result as LookupNameValuePairModel;
-
-        //    entity.LookupKey = model.LookupKey;
-        //    entity.Value = model.Value;
-
-        //    var operation2 = TableOperation.Replace(entity);
-
-        //    _table.Execute(operation2);
-        //}
+            repository.Update(entity);
+        }
 
         //// PUT api/lookupnamevaluepairs/???
         //[HttpDelete]
