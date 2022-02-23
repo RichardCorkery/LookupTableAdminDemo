@@ -35,6 +35,8 @@ namespace LookupTableAdminDemo.Api.Controllers
         //ToDo: Confirm Delete
         //ToDo: Set up DI
         //ToDo: Review Controller of the function app I did
+        //ToDo: Set up so only my Client can access the API: https://docs.microsoft.com/en-us/azure/active-directory/develop/quickstart-configure-app-access-web-apis
+        //  - Or maybe just set up okta?  
 
         // GET: api/lookupnamevaluepairs
         [HttpGet]
