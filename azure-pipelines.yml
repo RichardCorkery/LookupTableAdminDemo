@@ -25,3 +25,17 @@ stages:
         inputs:
           command: restore
           projects: '$(RestoreBuildProjects)'
+
+      - task: DotNetCoreCLI@2
+        displayName: Build
+        inputs:
+          projects: '$(RestoreBuildProjects)'
+          arguments: '--configuration $(BuildConfiguration)'
+
+      - task: DotNetCoreCLI@2
+        displayName: Publish
+        inputs:
+          command: publish
+          publishWebProjects: false
+          projects: '**/LookupTableAdminDemo.Api.csproj'
+          arguments: '--configuration $(BuildConfiguration) --output $(build.artifactstagingdirectory)'
