@@ -98,7 +98,7 @@ stages:
               displayName: 'Azure App Service Deploy: $(appServiceName)'
               inputs:
                 ConnectionType: 'AzureRM'
-                azureSubscription: 'Pay-As-You-Go'
+                azureSubscription: 'Pay-As-You-Go (7f443eb2-8f22-4b25-96a3-e36c8ce17bd3)'
                 appType: 'webApp'
                 WebAppName: '$(appServiceName)'
                 packageForLinux: '$(Pipeline.Workspace)/*.zip'
