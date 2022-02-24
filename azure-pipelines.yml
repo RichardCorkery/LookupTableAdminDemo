@@ -93,3 +93,12 @@ stages:
                 location: '$(location)'
                 csmFile: '$(Pipeline.Workspace)/AzureDeploy/lookupTableAdminDemo.azureDeploy.json'
                 overrideParameters: '-appServiceName "$(appServiceName)" -appInsightsName "$(appInsightsName)" -appServicePlanName "$(appServicePlanName)" -owner "$(owner)" -environment "$(environment)" -location "$(location)" -skuName "$(skuName)" -siteName "$(siteName)" -corsWithOriginsUrl "$(corsWithOriginsUrl)"'
+
+            - task: AzureRmWebAppDeployment@4
+              displayName: 'Azure App Service Deploy: $(appServiceName)'
+              inputs:
+                ConnectionType: 'AzureRM'
+                azureSubscription: 'Pay-As-You-Go'
+                appType: 'webApp'
+                WebAppName: '$(appServiceName)'
+                packageForLinux: '$(Pipeline.Workspace)/*.zip'
