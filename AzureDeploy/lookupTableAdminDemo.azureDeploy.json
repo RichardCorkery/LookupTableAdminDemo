@@ -48,14 +48,6 @@
                 "P4"
             ]
         },
-         "pennLinkConnectionString": {       
-            "defaultValue": "",    
-            "type": "String"
-        },
-        "pennCentralConnectionString": {       
-            "defaultValue": "",    
-            "type": "String"
-        },
         "corsWithOriginsUrl": {       
             "defaultValue": "",    
             "type": "String"
@@ -155,9 +147,7 @@
             "dependsOn": [
                 "[resourceId('Microsoft.Web/sites', parameters('appServiceName'))]"
             ],
-            "properties": {    
-                "Data:PennLink:ConnectionString": "[parameters('pennLinkConnectionString')]",            
-                "Data:PennCentral:ConnectionString": "[parameters('pennCentralConnectionString')]",                 
+            "properties": {  
                 "UseMockServices": false, 
                 "CorsWithOriginsUrl": "[parameters('corsWithOriginsUrl')]"
             }
