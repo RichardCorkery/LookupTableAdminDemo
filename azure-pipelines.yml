@@ -87,7 +87,7 @@ stages:
             - task: AzureResourceManagerTemplateDeployment@3
               displayName: 'ARM Template deployment: Resource Group scope'
               inputs:
-                azureResourceManagerConnection: '7f443eb2-8f22-4b25-96a3-e36c8ce17bd3'
+                azureResourceManagerConnection: 'Pay-As-You-Go (7f443eb2-8f22-4b25-96a3-e36c8ce17bd3)'
                 subscriptionId: '7f443eb2-8f22-4b25-96a3-e36c8ce17bd3'
                 resourceGroupName: '$(resourceGroupName)'
                 location: '$(location)'
