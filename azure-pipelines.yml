@@ -49,3 +49,25 @@ stages:
       - publish: '$(build.artifactstagingdirectory)'
         displayName: 'Publish pipeline artifacts'
         artifact: drop
+
+  - stage: 'SysTest'
+    displayName: 'Deploy to SysTest'
+    dependsOn: Build
+    jobs:
+    - deployment: Deploy
+      pool:
+        vmImage: 'windows-latest'
+      environment: SysTest
+      variables: 
+          appName: 'LookupTableApi'
+          environment: 'systest'
+          resourceGroupName: '$(appName)-rg-$(environment)'
+          appServiceName: 'rac-$(appName)-svc-$(environment)'
+          appInsightsName: '$(appName)-ins-$(environment)'
+          appServicePlanName: '$(appName)-asp-$(environment)'
+          location: 'East US'
+          owner: 'RichardCorkery.com'
+          siteName: 'rac-$(appName)-svc-$(environment)'
+          skuName: 'B1'
+          corsWithOriginsUrl: 'https://localhost:44329,https://localhost:5001'
+          subscription: 'Pay-As-You-Go (7f443eb2-8f22-4b25-96a3-e36c8ce17bd3)'
