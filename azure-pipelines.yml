@@ -56,7 +56,7 @@ stages:
     jobs:
     - deployment: Deploy
       pool:
-        vmImage: ubuntu-latest
+        vmImage: windows-latest
       environment: SysTest
       variables: 
           appName: 'LookupTableApi'
