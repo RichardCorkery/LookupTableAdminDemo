@@ -70,8 +70,7 @@ stages:
           siteName: 'rac-$(appName)-svc-$(environment)'
           skuName: 'B1'
           corsWithOriginsUrl: 'https://localhost:44329,https://localhost:5001'
-          subscription: '7f443eb2-8f22-4b25-96a3-e36c8ce17bd3', 
-          policyStorageConnectionString: ''
+          subscription: '7f443eb2-8f22-4b25-96a3-e36c8ce17bd3'
 
       strategy:
         runOnce:
@@ -93,7 +92,7 @@ stages:
                 resourceGroupName: '$(resourceGroupName)'
                 location: '$(location)'
                 csmFile: '$(Pipeline.Workspace)/AzureDeploy/lookupTableAdminDemo.azureDeploy.json'
-                overrideParameters: '-appServiceName "$(appServiceName)" -appInsightsName "$(appInsightsName)" -appServicePlanName "$(appServicePlanName)" -owner "$(owner)" -environment "$(environment)" -location "$(location)" -skuName "$(skuName)" -siteName "$(siteName)" -corsWithOriginsUrl "$(corsWithOriginsUrl)"'
+                overrideParameters: '-appServiceName "$(appServiceName)" -appInsightsName "$(appInsightsName)" -appServicePlanName "$(appServicePlanName)" -owner "$(owner)" -environment "$(environment)" -location "$(location)" -skuName "$(skuName)" -siteName "$(siteName)" -corsWithOriginsUrl "$(corsWithOriginsUrl)" -policyStorageConnectionString "$(policyStorageConnectionString)"'
 
             - task: AzureRmWebAppDeployment@4
               displayName: 'Azure App Service Deploy: $(appServiceName)'
