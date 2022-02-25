@@ -70,7 +70,8 @@ stages:
           siteName: 'rac-$(appName)-svc-$(environment)'
           skuName: 'B1'
           corsWithOriginsUrl: 'https://localhost:44329,https://localhost:5001'
-          subscription: '7f443eb2-8f22-4b25-96a3-e36c8ce17bd3'
+          subscription: '7f443eb2-8f22-4b25-96a3-e36c8ce17bd3', 
+          policyStorageConnectionString: ''
 
       strategy:
         runOnce:
