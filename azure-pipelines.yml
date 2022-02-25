@@ -8,7 +8,7 @@ stages:
     - job: 'Build'
       displayName: 'Build job'
       pool:
-        vmImage: 'windows-latest'
+        vmImage: ubuntu-latest
   
       variables:
         BuildConfiguration: 'Release'
